@@ -41,10 +41,9 @@
 
 <body>
 
-    <h1>Dashboard de Temperatura e Umidade</h1>
+    <h1>Dashboard de Umidade</h1>
 
     <div class="input-container">
-        <input type="number" id="entradaTemperatura" placeholder="Temperatura (°C)" />
         <input type="number" id="entradaUmidade" placeholder="Umidade (%)" />
         <button onclick="adicionar()">Adicionar Dados</button>
     </div>
@@ -61,7 +60,6 @@
     <script>
 
         var etiquetasLinhas = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
-        var dadosTemperatura = [30, 29, 28, 25, 22, 23];
         var dadosUmidade = [80, 82, 80, 85, 80, 83];
 
         var contextoLinhas = document.getElementById('graficoLinhas').getContext('2d');
@@ -70,13 +68,6 @@
             data: {
                 labels: etiquetasLinhas,
                 datasets: [
-                    {
-                        label: 'Temperatura (°C)',
-                        data: dadosTemperatura,
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        fill: true
-                    },
                     {
                         label: 'Umidade (%)',
                         data: dadosUmidade,
@@ -96,9 +87,7 @@
             }
         });
 
-
         var etiquetasBarras = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'];
-        var dadosTemperaturaMedia = [22, 24, 27, 23, 20, 18];
         var dadosUmidadeMedia = [90, 89, 93, 87, 88, 82];
 
         var contextoBarras = document.getElementById('graficoBarras').getContext('2d');
@@ -107,11 +96,6 @@
             data: {
                 labels: etiquetasBarras,
                 datasets: [
-                    {
-                        label: 'Temperatura Média (°C)',
-                        data: dadosTemperaturaMedia,
-                        backgroundColor: 'rgba(255, 159, 64, 1)'
-                    },
                     {
                         label: 'Umidade Média (%)',
                         data: dadosUmidadeMedia,
@@ -130,13 +114,11 @@
         });
 
         function adicionar() {
-            var novaTemperatura = parseFloat(document.getElementById('entradaTemperatura').value);
             var novaUmidade = parseFloat(document.getElementById('entradaUmidade').value);
             var horarioAtual = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            if (!isNaN(novaTemperatura) && !isNaN(novaUmidade)) {
+            if (!isNaN(novaUmidade)) {
                 etiquetasLinhas.push(horarioAtual);
-                dadosTemperatura.push(novaTemperatura);
                 dadosUmidade.push(novaUmidade);
 
                 graficoLinhas.update();
