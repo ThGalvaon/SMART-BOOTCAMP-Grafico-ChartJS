@@ -41,10 +41,11 @@
 
 <body>
 
-    <h1>Dashboard de Umidade</h1>
+    <h1>Dashboard de Umidade e Temperatura</h1>
 
     <div class="input-container">
         <input type="number" id="entradaUmidade" placeholder="Umidade (%)" />
+        <input type="number" id="entradaTemperatura" placeholder="Temperatura (°C)" />
         <button onclick="adicionar()">Adicionar Dados</button>
     </div>
 
@@ -58,9 +59,9 @@
     </div>
 
     <script>
-
         var etiquetasLinhas = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
         var dadosUmidade = [80, 82, 80, 85, 80, 83];
+        var dadosTemperatura = [22, 21, 23, 24, 22, 20];
 
         var contextoLinhas = document.getElementById('graficoLinhas').getContext('2d');
         var graficoLinhas = new Chart(contextoLinhas, {
@@ -73,6 +74,13 @@
                         data: dadosUmidade,
                         borderColor: 'rgba(54, 162, 235, 1)',
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true
+                    },
+                    {
+                        label: 'Temperatura (°C)',
+                        data: dadosTemperatura,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         fill: true
                     }
                 ]
@@ -89,6 +97,7 @@
 
         var etiquetasBarras = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'];
         var dadosUmidadeMedia = [90, 89, 93, 87, 88, 82];
+        var dadosTemperaturaMedia = [21, 22, 20, 19, 23, 21]; // Média da temperatura
 
         var contextoBarras = document.getElementById('graficoBarras').getContext('2d');
         var graficoBarras = new Chart(contextoBarras, {
@@ -100,6 +109,11 @@
                         label: 'Umidade Média (%)',
                         data: dadosUmidadeMedia,
                         backgroundColor: 'rgba(75, 192, 192, 1)'
+                    },
+                    {
+                        label: 'Temperatura Média (°C)',
+                        data: dadosTemperaturaMedia,
+                        backgroundColor: 'rgba(255, 159, 64, 1)'
                     }
                 ]
             },
@@ -115,11 +129,13 @@
 
         function adicionar() {
             var novaUmidade = parseFloat(document.getElementById('entradaUmidade').value);
+            var novaTemperatura = parseFloat(document.getElementById('entradaTemperatura').value);
             var horarioAtual = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            if (!isNaN(novaUmidade)) {
+            if (!isNaN(novaUmidade) && !isNaN(novaTemperatura)) {
                 etiquetasLinhas.push(horarioAtual);
                 dadosUmidade.push(novaUmidade);
+                dadosTemperatura.push(novaTemperatura);
 
                 graficoLinhas.update();
             }
